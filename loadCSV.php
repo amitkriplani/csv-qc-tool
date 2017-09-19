@@ -87,7 +87,7 @@ if (!empty($_POST)) {
                                             switch ($_POST['widget'][$headers[$key]]):
                                                 case "image":
                                                     ?>
-                                                    <img src="<?php echo $cell; ?>" style="color:red;" alt="<?php echo $cell ?>" />
+                                                    <img style="max-width:500px;max-height:500px;width:auto;height:auto;display:block;" src="<?php echo $cell; ?>" style="color:red;" alt="<?php echo $cell ?>" />
                                                     <?php
                                                     break;
                                                 case "url":
