@@ -72,7 +72,7 @@ if (!empty($_POST)) {
 								if (empty($_POST['required'][$headers[$key]])) continue;
 								if (empty($done)) $done = [];
 								if (empty($done[$headers[$key]])) $done[$headers[$key]] = [];
-								if (!empty($_POST['group'][$headers[$key]]) && $cell == $done[$headers[$key]][$cell]) continue;
+								if (!empty($_POST['group'][$headers[$key]]) && !empty($done[$headers[$key]][$cell])) continue;
 								$done[$headers[$key]][$cell] = $cell;
 							?>
                                 <tr>
