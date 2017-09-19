@@ -71,9 +71,9 @@ if (!empty($_POST)) {
 							<?php
 								if (empty($done)) $done = [];
 								foreach ($_POST['group'] as $key => $value) {
-									if (empty($done[$headers[$key]])) $done[$headers[$key]] = [];
-									if (!empty($done[$headers[$key]][$cell])) continue;
-									$done[$headers[$key]][$cell] = $cell;
+									if (empty($done[$key])) $done[$key] = [];
+									if (!empty($done[$key][$cell])) continue;
+									$done[$key][$cell] = $cell;
 								}
 							?>
                             <?php
