@@ -70,8 +70,8 @@ if (!empty($_POST)) {
                         <?php while ($row = fgetcsv($file)): ?>
 							<?php
 								if (empty($done)) $done = [];
-								if (empty($done[$headers[$key]])) $done[$headers[$key]] = [];
 								foreach ($_POST['group'] as $key => $value) {
+									if (empty($done[$headers[$key]])) $done[$headers[$key]] = [];
 									if (!empty($done[$headers[$key]][$cell])) continue;
 									$done[$headers[$key]][$cell] = $cell;
 								}
