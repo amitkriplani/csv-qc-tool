@@ -55,6 +55,7 @@ if (!empty($_POST)) {
                                     <option value="image">Image</option>
                                 </select>
                                 Required : <input type="checkbox" name="required[<?php echo $header ?>]" />
+                                Group : <input type="checkbox" name="group[<?php echo $header ?>]" />
                             </label>
                         </div>
                     <?php endforeach; ?>
@@ -68,6 +69,13 @@ if (!empty($_POST)) {
                     <tbody>
                         <?php while ($row = fgetcsv($file)): ?>
                             <?php foreach ($row as $key => $cell) : ?>
+							<?php if (empty($_POST['required'][$headers[$key]])) continue; ?>
+							<?php if (!empty($_POST['group'][$headers[$key]]) && $cell == $done[$headers[$key]][$cell]) continue; ?>
+							<?php
+							if (empty($done)) $done = [];
+							if (empty($done[$headers[$key]])) $done[$headers[$key]] = [];
+							$done[$headers[$key]][$cell] = $cell;
+							?>
                                 <tr>
                                     <td>
                                         <?php echo $headers[$key]; ?>
