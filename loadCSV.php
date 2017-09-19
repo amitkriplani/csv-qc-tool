@@ -68,13 +68,12 @@ if (!empty($_POST)) {
                 <table>
                     <tbody>
                         <?php while ($row = fgetcsv($file)): ?>
-                            <?php foreach ($row as $key => $cell) : ?>
-							<?php if (empty($_POST['required'][$headers[$key]])) continue; ?>
-							<?php if (!empty($_POST['group'][$headers[$key]]) && $cell == $done[$headers[$key]][$cell]) continue; ?>
-							<?php
-							if (empty($done)) $done = [];
-							if (empty($done[$headers[$key]])) $done[$headers[$key]] = [];
-							$done[$headers[$key]][$cell] = $cell;
+                            <?php foreach ($row as $key => $cell) :
+								if (empty($_POST['required'][$headers[$key]])) continue;
+								if (empty($done)) $done = [];
+								if (empty($done[$headers[$key]])) $done[$headers[$key]] = [];
+								if (!empty($_POST['group'][$headers[$key]]) && $cell == $done[$headers[$key]][$cell]) continue;
+								$done[$headers[$key]][$cell] = $cell;
 							?>
                                 <tr>
                                     <td>
