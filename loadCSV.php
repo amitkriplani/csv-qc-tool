@@ -68,19 +68,26 @@ if (!empty($_POST)) {
                 <table>
                     <tbody>
                         <?php while ($row = fgetcsv($file)): ?>
-							<?php
-								if (empty($done)) $done = [];
-								foreach ($_POST['group'] as $key => $value) {
-									if (empty($done[$key])) $done[$key] = [];
-									if (empty($done[$key][$row[$key]])) { 
-                                                                            $done[$key][$row[$key]] = $row[$key];
-                                                                        } else {
-                                                                            continue;
-                                                                        }
-								}
-								foreach ($row as $key => $cell) :
-									if (empty($_POST['required'][$headers[$key]])) continue;
-							?>
+                            <?php
+                            if (!empty($_POST['group'])) {
+                                if (empty($done)) {
+                                    $done = [];
+                                }
+                                foreach ($_POST['group'] as $key => $value) {
+                                    if (empty($done[$key])) {
+                                        $done[$key] = [];
+                                    }
+                                    if (empty($done[$key][$row[array_search($key, $headers)]])) {
+                                        $done[$key][$row[array_search($key, $headers)]] = $row[array_search($key, $headers)];
+                                    } else {
+                                        continue;
+                                    }
+                                }
+                            }
+                            foreach ($row as $key => $cell) :
+                                if (empty($_POST['required'][$headers[$key]]))
+                                    continue;
+                                ?>
                                 <tr>
                                     <td>
                                         <?php echo $headers[$key]; ?>
@@ -111,15 +118,15 @@ if (!empty($_POST)) {
                                         ?>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
+        <?php endforeach; ?>
                             <tr>
                                 <td><hr /></td>
                                 <td><hr /></td>
                             </tr>
-                        <?php endwhile; ?>
+            <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>
-        <?php endif; ?>
+<?php endif; ?>
     </body>
 </html>
