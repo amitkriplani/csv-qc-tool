@@ -73,7 +73,7 @@ if (!empty($_POST)) {
                                 if (empty($done)) {
                                     $done = [];
                                 }
-                                foreach ($_POST['group'] as $key => $value) {
+                                foreach ($_POST['group'] as $key) {
                                     if (empty($done[$key])) {
                                         $done[$key] = [];
                                     }
