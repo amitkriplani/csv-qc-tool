@@ -73,14 +73,14 @@ if (!empty($_POST)) {
                                 if (empty($done)) {
                                     $done = [];
                                 }
-                                foreach ($_POST['group'] as $key) {
+                                foreach ($_POST['group'] as $key => $on) {
                                     if (empty($done[$key])) {
                                         $done[$key] = [];
                                     }
                                     if (empty($done[$key][$row[array_search($key, $headers)]])) {
                                         $done[$key][$row[array_search($key, $headers)]] = $row[array_search($key, $headers)];
                                     } else {
-                                        continue;
+                                        continue 2;
                                     }
                                 }
                             }
