@@ -72,8 +72,11 @@ if (!empty($_POST)) {
 								if (empty($done)) $done = [];
 								foreach ($_POST['group'] as $key => $value) {
 									if (empty($done[$key])) $done[$key] = [];
-									if (!empty($done[$key][$row[$key]])) continue;
-									$done[$key][$row[$key]] = $row[$key];
+									if (empty($done[$key][$row[$key]])) { 
+                                                                            $done[$key][$row[$key]] = $row[$key];
+                                                                        } else {
+                                                                            continue;
+                                                                        }
 								}
 								foreach ($row as $key => $cell) :
 									if (empty($_POST['required'][$headers[$key]])) continue;
