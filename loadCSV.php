@@ -21,6 +21,8 @@ $headers = fgetcsv($file);
 if (empty($headers)) {
     trigger_error("Empty CSV file", E_USER_ERROR);
 }
+$headers['image'] = 'Images';
+$_POST['widget']['image'] = 'image';
 
 $show = "mapping";
 
@@ -115,7 +117,7 @@ if (!empty($_POST)) {
                                                     ?>
                                                     <div>
                                                         <?php foreach ($cell as $image) : ?>
-                                                            <img style="max-width:500px;max-height:500px;width:auto;height:auto;display:block;float: left;" src="<?php echo $cell; ?>" style="color:red;" alt="<?php echo $cell ?>" />
+                                                            <img style="max-width:350px;max-height:350px;width:auto;height:auto;display:block;float: left;" src="<?php echo $image; ?>" style="color:red;" alt="<?php echo $image ?>" />
                                                         <?php endforeach; ?>
                                                     </div>
                                                     <?php
