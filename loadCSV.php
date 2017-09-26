@@ -31,6 +31,38 @@ if (!empty($_POST)) {
         }
     }
     $show = "data";
+    $data = [];
+    while ($row = fgetcsv($file)) {
+        if (!empty($_POST['group'])) {
+            if (empty($done)) {
+                $done = [];
+            }
+            foreach ($_POST['group'] as $key => $on) {
+                if (empty($done[$key])) {
+                    $done[$key] = [];
+                }
+                if (empty($done[$key][$row[array_search($key, $headers)]])) {
+                    $done[$key][$row[array_search($key, $headers)]] = $row[array_search($key, $headers)];
+                } else {
+                    continue 2;
+                }
+            }
+        }
+        $rowX = [];
+        $rowX['image'] = [];
+        foreach ($row as $key => $cell) {
+            if (empty($_POST['required'][$headers[$key]])) {
+                continue;
+            } elseif ($_POST['widget'][$headers[$key]] == 'image') {
+                $rowX['image'][] = $cell;
+            } else {
+                $rowX[] = $cell;
+            }
+        }
+        if ($rowX) {
+            $data[] = $rowX;
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -67,27 +99,8 @@ if (!empty($_POST)) {
             <div class="data-container">
                 <table>
                     <tbody>
-                        <?php while ($row = fgetcsv($file)): ?>
-                            <?php
-                            if (!empty($_POST['group'])) {
-                                if (empty($done)) {
-                                    $done = [];
-                                }
-                                foreach ($_POST['group'] as $key => $on) {
-                                    if (empty($done[$key])) {
-                                        $done[$key] = [];
-                                    }
-                                    if (empty($done[$key][$row[array_search($key, $headers)]])) {
-                                        $done[$key][$row[array_search($key, $headers)]] = $row[array_search($key, $headers)];
-                                    } else {
-                                        continue 2;
-                                    }
-                                }
-                            }
-                            foreach ($row as $key => $cell) :
-                                if (empty($_POST['required'][$headers[$key]]))
-                                    continue;
-                                ?>
+                        <?php foreach ($data as $row) : ?>
+                            <?php foreach ($row as $key => $cell) : ?>
                                 <tr>
                                     <td>
                                         <?php echo $headers[$key]; ?>
@@ -100,7 +113,11 @@ if (!empty($_POST)) {
                                             switch ($_POST['widget'][$headers[$key]]):
                                                 case "image":
                                                     ?>
-                                                    <img style="max-width:500px;max-height:500px;width:auto;height:auto;display:block;" src="<?php echo $cell; ?>" style="color:red;" alt="<?php echo $cell ?>" />
+                                                    <div>
+                                                        <?php foreach ($cell as $image) : ?>
+                                                            <img style="max-width:500px;max-height:500px;width:auto;height:auto;display:block;float: left;" src="<?php echo $cell; ?>" style="color:red;" alt="<?php echo $cell ?>" />
+                                                        <?php endforeach; ?>
+                                                    </div>
                                                     <?php
                                                     break;
                                                 case "url":
@@ -109,24 +126,22 @@ if (!empty($_POST)) {
                                                     <?php
                                                     break;
                                                 case "text":
-                                                    ?>
-                                                    <?php echo utf8_encode($cell) ?>
-                                                    <?php
+                                                    echo utf8_encode($cell);
                                                     break;
                                             endswitch;
                                         endif;
                                         ?>
                                     </td>
                                 </tr>
-        <?php endforeach; ?>
+                            <?php endforeach; ?>
                             <tr>
                                 <td><hr /></td>
                                 <td><hr /></td>
                             </tr>
-            <?php endwhile; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-<?php endif; ?>
+        <?php endif; ?>
     </body>
 </html>
