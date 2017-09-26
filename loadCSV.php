@@ -86,10 +86,10 @@ if (!empty($_POST)) {
                                 <select name="widget[<?php echo $header ?>]">
                                     <option value="text">Text</option>
                                     <option value="url">URL</option>
-                                    <option value="image">Image</option>
+                                    <option <?php echo (stripos($header, 'image') !== false) ? 'selected' : ''; ?> value="image">Image</option>
                                 </select>
-                                Required : <input type="checkbox" name="required[<?php echo $header ?>]" />
-                                Group : <input type="checkbox" name="group[<?php echo $header ?>]" />
+                                Required : <input <?php echo (stripos($header, 'image') !== false || stripos($header, 'name') !== false) ? 'checked' : ''; ?> type="checkbox" name="required[<?php echo $header ?>]" />
+                                Group : <input <?php echo (stripos($header, 'name') !== false) ? 'checked' : ''; ?> type="checkbox" name="group[<?php echo $header ?>]" />
                             </label>
                         </div>
                     <?php endforeach; ?>
