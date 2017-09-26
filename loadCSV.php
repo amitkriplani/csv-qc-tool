@@ -21,12 +21,12 @@ $headers = fgetcsv($file);
 if (empty($headers)) {
     trigger_error("Empty CSV file", E_USER_ERROR);
 }
-$headers['image'] = 'Images';
-$_POST['widget']['Images'] = 'image';
 
 $show = "mapping";
 
 if (!empty($_POST)) {
+    $headers['image'] = 'Images';
+    $_POST['widget']['Images'] = 'image';
     foreach ($headers as $header) {
         if (empty($_POST['widget'][$header])) {
             trigger_error("Undefined widget for $header", E_USER_ERROR);
