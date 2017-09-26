@@ -22,7 +22,7 @@ if (empty($headers)) {
     trigger_error("Empty CSV file", E_USER_ERROR);
 }
 $headers['image'] = 'Images';
-$_POST['widget']['image'] = 'image';
+$_POST['widget']['Images'] = 'image';
 
 $show = "mapping";
 
